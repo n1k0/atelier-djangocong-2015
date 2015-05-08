@@ -4,9 +4,9 @@ import Task from './Task';
 export default class TaskList extends React.Component {
   render() {
     return (
-      <ul>{
+      <ul className="list-group">{
         this.props.tasks.map((task, key) => {
-          return <Task key={key} name={task.name}/>;
+          return <Task key={key} flux={this.props.flux} task={task} />;
         })
       }</ul>
     );

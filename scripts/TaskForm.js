@@ -1,9 +1,18 @@
 import React from 'react';
 
 export default class TaskForm extends React.Component {
+  onFormSubmit(event) {
+    event.preventDefault();
+    this.props.flux.getActions("tasks").create({
+      owner: "niko",
+      name: event.target.name.value,
+      categories: [event.target.category.value]
+    });
+  }
+
   render() {
     return (
-      <form onSubmit={this.props.onSubmit}>
+      <form onSubmit={this.onFormSubmit.bind(this)}>
         <div className="form-group">
           <label>
             <span>Name</span>
