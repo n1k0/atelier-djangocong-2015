@@ -1,4 +1,6 @@
 import React from 'react';
+import TaskForm from './TaskForm';
+import TaskList from './TaskList';
 
 const TaskClient = {
   get defaultHeaders() {
@@ -35,23 +37,6 @@ const TaskClient = {
   }
 }
 
-class Task extends React.Component {
-  onCheckboxClick(event) {
-    // TODO
-  }
-
-  render() {
-    return (
-      <li>
-        <label>
-          <input type="checkbox" onClick={this.onCheckboxClick}/>{" "}
-          {this.props.name}
-        </label>
-      </li>
-    );
-  }
-}
-
 export default class App extends React.Component {
   state = {categories: [], tasks: []};
 
@@ -84,31 +69,10 @@ export default class App extends React.Component {
     return (
       <div>
         <h1>Tasks</h1>
-        <ul>{
-          this.state.tasks.map((task, key) => {
-            return <Task key={key} name={task.name}/>;
-          })
-        }</ul>
+        <TaskList tasks={this.state.tasks} />
         {/* Note: we shouldn't have to bind here, bug? */}
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <div className="form-group">
-            <label>
-              <span>Name</span>
-              <input type="text" className="form-control" name="name" placeholder="Task name"/>
-            </label>
-          </div>
-          <div className="form-group">
-            <label>
-              <span>Category</span>
-              <select className="form-control" name="category">{
-                this.state.categories.map((cat, key) => {
-                  return <option key={key} value={cat.name}>{cat.name}</option>;
-                })
-              }</select>
-            </label>
-          </div>
-          <button className="btn btn-primary" type="submit">Create</button>
-        </form>
+        <TaskForm categories={this.state.categories}
+                  onSubmit={this.onFormSubmit.bind(this)} />
       </div>
     );
   }
